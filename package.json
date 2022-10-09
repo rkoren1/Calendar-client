@@ -1,0 +1,53 @@
+{
+  "name": "demo-app",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "build-themes": "devextreme build",
+    "postinstall": "npm run build-themes",
+    "lint": "ng lint"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^14.2.5",
+    "@angular/cdk": "^14.2.4",
+    "@angular/common": "^14.2.5",
+    "@angular/compiler": "^14.2.5",
+    "@angular/core": "^14.2.5",
+    "@angular/forms": "^14.2.5",
+    "@angular/platform-browser": "^14.2.5",
+    "@angular/platform-browser-dynamic": "^14.2.5",
+    "@angular/router": "^14.2.5",
+    "@microsoft/signalr": "^6.0.9",
+    "@ngrx/effects": "^14.3.2",
+    "@ngrx/store": "^14.3.2",
+    "@ngrx/store-devtools": "^14.3.2",
+    "devextreme": "22.1.5",
+    "devextreme-angular": "22.1.5",
+    "devextreme-schematics": "1.4.2",
+    "rxjs": "7.5.0",
+    "tslib": "^2.4.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^14.2.5",
+    "@angular-eslint/builder": "14.1.2",
+    "@angular-eslint/eslint-plugin": "14.1.2",
+    "@angular-eslint/eslint-plugin-template": "14.1.2",
+    "@angular-eslint/schematics": "14.1.2",
+    "@angular-eslint/template-parser": "14.1.2",
+    "@angular/cli": "^14.2.5",
+    "@angular/compiler-cli": "^14.2.5",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "5.39.0",
+    "@typescript-eslint/parser": "5.39.0",
+    "devextreme-cli": "1.4.2",
+    "devextreme-themebuilder": "^22.1.5",
+    "eslint": "^8.24.0",
+    "typescript": "4.8.4"
+  }
+}
