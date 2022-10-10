@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import { lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { CalendarService } from './calendar.service';
 
 @Component({
@@ -34,7 +35,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startConnectionWithCalendarHub('https://localhost:5001/calendarevent');
+    this.startConnectionWithCalendarHub(environment.apiUrl + 'calendarevent');
 
     this.hubConnection.on('NewCalendarEvent', (event: any) => {
       console.log(event);
