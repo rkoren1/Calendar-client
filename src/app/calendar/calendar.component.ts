@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import * as signalR from '@microsoft/signalr';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
-import * as signalR from '@microsoft/signalr';
+import { lastValueFrom } from 'rxjs';
+import { CalendarService } from './calendar.service';
 
 @Component({
   selector: 'app-calendar',
@@ -12,33 +12,44 @@ import * as signalR from '@microsoft/signalr';
 })
 export class CalendarComponent implements OnInit {
   dataSource: DataSource;
+  hubConnection: any;
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) {
+  constructor(private calendarService: CalendarService) {
     this.dataSource = new DataSource({
-      store: new CustomStore(/* {
+      store: new CustomStore({
         load: (options) => {
-          return of(true);
+          return lastValueFrom(this.calendarService.getEvents());
         },
         insert: (values) => {
-          return of(true);
+          return lastValueFrom(this.calendarService.insertEvent(values));
         },
-        remove: (key) => {
-          return of(true);
-        },
+        /* remove: (key) => {
+          return lastValueFrom(this.calendarService.deleteEvent(key));
+        }, */
         update: (key, values) => {
-          return of(true);
+          return lastValueFrom(this.calendarService.updateEvent(values));
         },
-      } */),
+      }),
     });
   }
 
   ngOnInit(): void {
-    let connection = new signalR.HubConnectionBuilder()
-      .withUrl('/calendarEvent')
-      .build();
+    this.startConnectionWithCalendarHub('https://localhost:5001/calendarevent');
 
-    connection.on('NewCalendarEvent', (data) => {
-      console.log(data);
+    this.hubConnection.on('NewCalendarEvent', (event: any) => {
+      console.log(event);
     });
+  }
+
+  startConnectionWithCalendarHub(url: string) {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(url)
+      .build();
+    this.hubConnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .catch((err: any) =>
+        console.log('Error while starting connection: ' + err)
+      );
   }
 }
