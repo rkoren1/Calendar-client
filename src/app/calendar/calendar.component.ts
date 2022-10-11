@@ -4,6 +4,7 @@ import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CalendarEventDto } from './calendar.model';
 import { CalendarService } from './calendar.service';
 
 @Component({
@@ -19,10 +20,23 @@ export class CalendarComponent implements OnInit {
     this.dataSource = new DataSource({
       store: new CustomStore({
         load: (options) => {
-          return lastValueFrom(this.calendarService.getEvents());
+          return lastValueFrom(this.calendarService.getEvents()).then((res) => {
+            console.log(res);
+            return res;
+          });
         },
         insert: (values) => {
-          return lastValueFrom(this.calendarService.insertEvent(values));
+          const calendarObject: CalendarEventDto = {
+            subject: values.summary,
+            allDay: values.allDay,
+            description: values.description,
+            end: values.endDate,
+            start: values.startDate,
+            repetable: values.repetable,
+          };
+          return lastValueFrom(
+            this.calendarService.insertEvent(calendarObject)
+          );
         },
         /* remove: (key) => {
           return lastValueFrom(this.calendarService.deleteEvent(key));

@@ -11,26 +11,29 @@ export class CalendarService {
 
   getEvents() {
     return this.http.get<CalendarEvent>(
-      environment.apiUrl + 'api/CalendarEvents'
+      environment.apiUrl + 'api/CalendarEvents/GetCalendarEvents'
     );
   }
 
   insertEvent(calendarEventDto: CalendarEventDto) {
     return this.http.post<CalendarEventDto>(
-      environment.apiUrl + 'api/CalendarEvents',
+      environment.apiUrl + 'api/CalendarEvents/PostCalendarEvent',
       calendarEventDto
     );
   }
   updateEvent(calendarEventDto: CalendarEventDto) {
     return this.http.put<CalendarEventDto>(
-      environment.apiUrl + 'api/CalendarEvents',
+      environment.apiUrl + 'api/CalendarEvents/UpdateCalendarEvent',
       calendarEventDto
     );
   }
   deleteEvent(calendarEventId: number) {
     const params = new HttpParams().set('id', calendarEventId);
-    return this.http.delete(environment.apiUrl + 'api/CalendarEvents', {
-      params,
-    });
+    return this.http.delete(
+      environment.apiUrl + 'api/CalendarEvents/DeleteCalendarEvent',
+      {
+        params,
+      }
+    );
   }
 }
