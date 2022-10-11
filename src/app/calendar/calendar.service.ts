@@ -21,10 +21,14 @@ export class CalendarService {
       calendarEventDto
     );
   }
-  updateEvent(calendarEventDto: CalendarEventDto) {
+  updateEvent(calendarEvent: CalendarEvent) {
+    const params = new HttpParams().set('id', calendarEvent.id);
     return this.http.put<CalendarEventDto>(
       environment.apiUrl + 'api/CalendarEvents/UpdateCalendarEvent',
-      calendarEventDto
+      calendarEvent,
+      {
+        params,
+      }
     );
   }
   deleteEvent(calendarEventId: number) {
