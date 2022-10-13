@@ -53,6 +53,7 @@ export class CalendarComponent implements OnInit {
 
     this.hubConnection.on('NewCalendarEvent', (event: any) => {
       console.log(event);
+      this.dataSource.reload();
     });
   }
 
